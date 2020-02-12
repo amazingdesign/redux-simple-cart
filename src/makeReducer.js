@@ -13,7 +13,15 @@ export const makeReducer = (cartName, actionTypes) => {
       case actionTypes.ADD:
         return {
           ...state,
-          items: state.items.concat(actionItem),
+          items: state.items.find((item) => item.id === actionItem.id) ?
+            state.items.map((item) => (
+              item.id === actionItem.id ?
+                { ...item, ...actionItem, quantity: ((item.quantity || 1) + (actionItem.quantity || 1)) }
+                :
+                item
+            ))
+            :
+            state.items.concat(actionItem),
         }
       case actionTypes.UPDATE:
         return {
