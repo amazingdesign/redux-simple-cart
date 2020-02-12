@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import makeCart, { instances, getInstances } from '../src'
 
 const INSTANCE_SHAPE = {
@@ -149,7 +150,7 @@ describe('Reducer', () => {
     const stateAfterAction3 = reducer(stateAfterAction2, addAction3)
     const stateAfterAction4 = reducer(stateAfterAction3, removeAction)
 
-    expect(stateAfterAction4).toEqual({ items: [item1, {...item2, quantity: 1}, item3] })
+    expect(stateAfterAction4).toEqual({ items: [item1, { ...item2, quantity: 1 }, item3] })
   })
 
   it('should remove selected item by one quantity - v2', () => {
@@ -158,6 +159,26 @@ describe('Reducer', () => {
     const item1 = { id: '123', price: 100, quantity: 1 }
     const item2 = { id: '321', price: 200, quantity: 2 }
     const item3 = { id: '231', price: 300, quantity: 3 }
+    const addAction1 = actions.add(item1.id, item1)
+    const addAction2 = actions.add(item2.id, item2)
+    const addAction3 = actions.add(item3.id, item3)
+    const removeAction = actions.remove(item2.id)
+
+    const stateAfterAction1 = reducer(undefined, addAction1)
+    const stateAfterAction2 = reducer(stateAfterAction1, addAction2)
+    const stateAfterAction3 = reducer(stateAfterAction2, addAction3)
+    const stateAfterAction4 = reducer(stateAfterAction3, removeAction)
+    const stateAfterAction5 = reducer(stateAfterAction4, removeAction)
+
+    expect(stateAfterAction5).toEqual({ items: [item1, item3] })
+  })
+
+  it('should remove selected item by one quantity - v3', () => {
+    const [{ reducer, actions }] = getInstances()
+
+    const item1 = { id: '123', price: 100 }
+    const item2 = { id: '321', price: 200 }
+    const item3 = { id: '231', price: 300 }
     const addAction1 = actions.add(item1.id, item1)
     const addAction2 = actions.add(item2.id, item2)
     const addAction3 = actions.add(item3.id, item3)

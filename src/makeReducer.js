@@ -43,7 +43,7 @@ export const makeReducer = (cartName, actionTypes) => {
               { ...item, ...actionItem, quantity: ((item.quantity || 1) - 1) }
               :
               item
-          )).filter((item) => item.quantity > 0),
+          )).filter((item) => item.quantity === undefined || item.quantity > 0),
         }
       default:
         return state
