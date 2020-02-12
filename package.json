@@ -10,7 +10,9 @@
     "test:watch": "jest --watchAll",
     "build": "babel src -d dist",
     "prepublish": "npm run build",
-    "release": "np"
+    "release": "np",
+    "eslint": "eslint .",
+    "fix": "eslint . --fix"
   },
   "author": "amazingdesign.eu",
   "license": "MIT",
@@ -18,7 +20,13 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
+    "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.7.0",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "husky": "^4.2.2",
     "jest": "^24.9.0",
     "nodemon": "^1.19.4",
     "np": "^6.0.0",
@@ -27,5 +35,11 @@
   },
   "peerDependencies": {
     "redux": "4.x"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run fix",
+      "pre-push": "npm test"
+    }
   }
 }
